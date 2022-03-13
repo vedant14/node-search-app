@@ -20,7 +20,7 @@ export default function useKeyPress(targetKey) {
 
     window.addEventListener("keydown", downHandler);
     window.addEventListener("keyup", upHandler);
-
+    // window.addEventListener("Enter", upHandler);
     return () => {
       window.removeEventListener("keydown", downHandler);
       window.removeEventListener("keyup", upHandler);

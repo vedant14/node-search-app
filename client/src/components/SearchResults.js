@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useKeyPress from "../utils/arrowKeyPress";
 export default function SearchResults({
   queryString,
@@ -8,11 +9,27 @@ export default function SearchResults({
 }) {
   const arrowUpPressed = useKeyPress("ArrowUp");
   const arrowDownPressed = useKeyPress("ArrowDown");
+  const enterPressed = useKeyPress("Enter");
+  const navigate = useNavigate();
+
+  function onHover(value) {
+    setActive(value);
+  }
+
+  useEffect(() => {
+    if (enterPressed) {
+      console.log("HEre");
+      if (active || active === 0) {
+        console.log("HEre");
+        navigate(`/user?id=${queryResults[active].id}`);
+      }
+    }
+  }, [enterPressed]);
 
   useEffect(() => {
     if (arrowUpPressed) {
-      if (active === 0) {
-        setActive(1);
+      if (active <= 0) {
+        setActive(null);
       } else {
         setActive(active - 1);
       }
@@ -21,9 +38,14 @@ export default function SearchResults({
 
   useEffect(() => {
     if (arrowDownPressed) {
-      setActive(active + 1);
+      if (active === null) {
+        setActive(0);
+      } else if (active < queryResults.length - 1) {
+        setActive(active + 1);
+      }
     }
   }, [arrowDownPressed]);
+
   if (!queryString) {
     return null;
   } else if (queryResults.length === 0) {
@@ -39,6 +61,7 @@ export default function SearchResults({
       </div>
     );
   }
+
   function ShowResults() {
     return (
       <div className="search-results">
@@ -46,6 +69,7 @@ export default function SearchResults({
           <div
             className={`search-card ${active === i ? `active` : ``} `}
             key={i}
+            onMouseEnter={() => onHover(i)}
           >
             <a href={`/user?id=${data.id}`}>
               <p className="search-id">{data.id}</p>
