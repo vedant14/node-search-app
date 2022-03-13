@@ -1,33 +1,58 @@
-export default function SearchResults({ queryString, queryResults }) {
+import { useState, useEffect } from "react";
+import useKeyPress from "../utils/arrowKeyPress";
+export default function SearchResults({
+  queryString,
+  queryResults,
+  active,
+  setActive,
+}) {
+  const arrowUpPressed = useKeyPress("ArrowUp");
+  const arrowDownPressed = useKeyPress("ArrowDown");
+
+  useEffect(() => {
+    if (arrowUpPressed) {
+      if (active === 0) {
+        setActive(1);
+      } else {
+        setActive(active - 1);
+      }
+    }
+  }, [arrowUpPressed]);
+
+  useEffect(() => {
+    if (arrowDownPressed) {
+      setActive(active + 1);
+    }
+  }, [arrowDownPressed]);
   if (!queryString) {
-    return <StartSearch />;
+    return null;
   } else if (queryResults.length === 0) {
     return <NoResults />;
   } else {
     return <ShowResults />;
   }
 
-  function StartSearch() {
-    return <div>Start search</div>;
-  }
-
   function NoResults() {
-    return <div>No results match your query</div>;
+    return (
+      <div>
+        <p>No results match your query</p>
+      </div>
+    );
   }
   function ShowResults() {
     return (
-      <div>
+      <div className="search-results">
         {queryResults.map((data, i) => (
-          <a key={i} href={`/user?id=${data.id}`}>
-            <div>
-              {data.id}
-              {data.name}
-              {data.address}
-              {data.items.map((item, i) => (
-                <div key={i}>{item}</div>
-              ))}
-            </div>
-          </a>
+          <div
+            className={`search-card ${active === i ? `active` : ``} `}
+            key={i}
+          >
+            <a href={`/user?id=${data.id}`}>
+              <p className="search-id">{data.id}</p>
+              <p className="search-name">{data.name}</p>
+              <p className="search-address">{data.address}</p>
+            </a>
+          </div>
         ))}
       </div>
     );

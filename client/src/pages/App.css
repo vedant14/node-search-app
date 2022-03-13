@@ -3,6 +3,60 @@
   margin-top: 200px;
 }
 
-.Input-header {
-  margin-top: 30px;
+.App a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.input-field-container {
+  margin: 30px auto;
+  width: 300px;
+}
+
+.input-field {
+  width: 100%;
+}
+
+.search-results {
+  width: 100%;
+  height: fit-content;
+  /* max-height: 250px; */
+  overflow: scroll;
+  box-shadow: 0px 3px 3px #d3d3d3;
+}
+
+.search-card {
+  text-align: left;
+  border-bottom: 1px solid #d3d3d3;
+  padding: 10px;
+  color: #02141c;
+  text-decoration: none !important;
+}
+.search-card:hover {
+  background: #fdfd96;
+}
+
+.active {
+  background: #fdfd96;
+}
+
+.search-name,
+.search-address,
+.search-id {
+  text-decoration: none;
+  margin: 0px;
+}
+
+.search-id {
+  font-weight: bold;
+}
+
+.search-name {
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.search-address {
+  font-size: 12px;
+  margin-top: 4px;
 }
