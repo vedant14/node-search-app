@@ -8,8 +8,13 @@ app.get("/search", (req, res) => {
   // Get the query params from the get call
   if (query) {
     // Run search only if the query is present
-    var filteredUsers = userData.filter((user) =>
-      user.name.toLowerCase().includes(query.toLowerCase())
+    var filteredUsers = userData.filter(
+      (user) =>
+        user.name.toLowerCase().includes(query.toLowerCase()) ||
+        user.address.toLowerCase().includes(query.toLowerCase()) ||
+        user.id.toLowerCase().includes(query.toLowerCase()) ||
+        user.pincode.toLowerCase().includes(query.toLowerCase()) ||
+        user.items.includes(query)
     );
     // Creating a new variable filteredUsers if it includes the characters present in the query stirng
     res.send(filteredUsers);

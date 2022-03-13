@@ -1,5 +1,4 @@
 export default function SearchResults({ queryString, queryResults }) {
-  console.log(queryResults.length);
   if (!queryString) {
     return <StartSearch />;
   } else if (queryResults.length === 0) {
@@ -19,7 +18,16 @@ export default function SearchResults({ queryString, queryResults }) {
     return (
       <div>
         {queryResults.map((data, i) => (
-          <div key={i}>{data.name}</div>
+          <a key={i} href={`/user?id=${data.id}`}>
+            <div>
+              {data.id}
+              {data.name}
+              {data.address}
+              {data.items.map((item, i) => (
+                <div key={i}>{item}</div>
+              ))}
+            </div>
+          </a>
         ))}
       </div>
     );

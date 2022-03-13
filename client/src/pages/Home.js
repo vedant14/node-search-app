@@ -11,7 +11,6 @@ export default function HomePage() {
       .then((result) => setQueryResults(result))
       .catch((error) => console.log("error", error));
   }
-  console.log(queryResults);
   return (
     <div className="App">
       <header>Node search app</header>
@@ -19,6 +18,7 @@ export default function HomePage() {
         <input
           type="search"
           value={queryString}
+          placeholder="Search users by ID, name or address"
           onChange={(e) => callSearchFunction(e.target.value)}
         />
         <SearchResults queryString={queryString} queryResults={queryResults} />
