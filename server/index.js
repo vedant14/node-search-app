@@ -3,7 +3,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const userData = require("./data/userData.json");
 
-app.get("/", (req, res) => {
+app.get("/search", (req, res) => {
   const query = req.query.query;
   // Get the query params from the get call
   if (query) {
