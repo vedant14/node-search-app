@@ -17,16 +17,16 @@ export default function SearchResults({
   }
 
   useEffect(() => {
+    // When the enter key is pressed navigate to the active element, if the active element exists
     if (enterPressed) {
-      console.log("HEre");
       if (active || active === 0) {
-        console.log("HEre");
         navigate(`/user?id=${queryResults[active].id}`);
       }
     }
   }, [enterPressed]);
 
   useEffect(() => {
+    // When the arrow up is pressed move to the element above the current active element, if the active is greater than zero
     if (arrowUpPressed) {
       if (active <= 0) {
         setActive(null);
@@ -37,6 +37,7 @@ export default function SearchResults({
   }, [arrowUpPressed]);
 
   useEffect(() => {
+    // When the arrow down is pressed move to the element below the current active element, if the active is smaller than the length of results array
     if (arrowDownPressed) {
       if (active === null) {
         setActive(0);
@@ -47,10 +48,13 @@ export default function SearchResults({
   }, [arrowDownPressed]);
 
   if (!queryString) {
+    // If no input hide everything
     return null;
   } else if (queryResults.length === 0) {
+    // If no results show No Results message
     return <NoResults />;
   } else {
+    // Else show results.
     return <ShowResults />;
   }
 
@@ -66,6 +70,7 @@ export default function SearchResults({
     return (
       <div className="search-results">
         {queryResults.map((data, i) => (
+          // If activestate matches the current element then attach the active class to the element
           <div
             className={`search-card ${active === i ? `active` : ``} `}
             key={i}

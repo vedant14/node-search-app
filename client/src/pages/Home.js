@@ -19,6 +19,7 @@ export default function HomePage() {
     <div className="App">
       <header>Node search app</header>
       <div className="input-field-container">
+        {/* Input field */}
         <input
           type="search"
           value={queryString}
@@ -27,6 +28,7 @@ export default function HomePage() {
           autoFocus
           onChange={(e) => callSearchFunction(e.target.value)}
         />
+        {/* Search Result component handles showing the results */}
         <SearchResults
           queryString={queryString}
           queryResults={queryResults}
