@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useKeyPress from "../utils/arrowKeyPress";
 export default function SearchResults({
@@ -11,6 +11,7 @@ export default function SearchResults({
   const arrowDownPressed = useKeyPress("ArrowDown");
   const enterPressed = useKeyPress("Enter");
   const navigate = useNavigate();
+  const currentElement = useRef(null);
 
   function onHover(value) {
     setActive(value);
@@ -32,6 +33,10 @@ export default function SearchResults({
         setActive(null);
       } else {
         setActive(active - 1);
+        // Scroll into view can be triggered from here
+        document.getElementById(active).style.background = "black";
+        console.log(document.getElementById(active));
+        // document.getElementById(active).scrollIntoView();
       }
     }
   }, [arrowUpPressed]);
@@ -43,6 +48,9 @@ export default function SearchResults({
         setActive(0);
       } else if (active < queryResults.length - 1) {
         setActive(active + 1);
+        // Scroll into view can be triggered from here
+        // document.getElementById(active).scrollIntoView();
+        console.log(currentElement.current);
       }
     }
   }, [arrowDownPressed]);
@@ -72,11 +80,18 @@ export default function SearchResults({
         {queryResults.map((data, i) => (
           // If activestate matches the current element then attach the active class to the element
           <div
+            id={i}
+            ref={currentElement}
             className={`search-card ${active === i ? `active` : ``} `}
             key={i}
-            onMouseEnter={() => onHover(i)}
+            onMouseEnter={() => {
+              onHover(i);
+              document.getElementById(active).style.border = "1px solid black";
+              console.log(document.getElementById(active));
+            }}
           >
             <a href={`/user?id=${data.id}`}>
+              <p>this is the index {i}</p>
               <p className="search-id">{data.id}</p>
               <p className="search-name">{data.name}</p>
               <p className="search-address">{data.address}</p>
